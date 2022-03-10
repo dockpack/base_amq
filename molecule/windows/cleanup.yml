@@ -2,7 +2,6 @@
 # Standards: 0.2
 - name: Converge
   hosts: all
-  become: true
   vars:
     desired_state: absent
 
@@ -10,4 +9,3 @@
     - name: Play the role.
       include_role:
         name: "base_amq"
-...
