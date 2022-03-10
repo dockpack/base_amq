@@ -13,6 +13,7 @@ platforms:
   - name: amq-centos8
     image: quay.io/centos/centos:stream8
     command: /sbin/init
+    privileged: true
     tmpfs:
       - /run
       - /tmp
