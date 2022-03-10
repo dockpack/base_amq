@@ -1,3 +1,5 @@
+---
+
 - name: Manage directories
   win_file:
     path: "{{ item }}"
