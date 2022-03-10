@@ -1,0 +1,10 @@
+---
+# defaults file for base_amq
+desired_state: present
+amq_ver: 2.18.0
+amq_download_file: "apache-artemis-{{ amq_ver }}-bin.zip"
+# yamllint disable
+amq_download_url: "https://archive.apache.org/dist/activemq/activemq-artemis/{{ amq_ver }}/{{ amq_download_file }}"
+amq_checksum: 'sha512:5c485844b135abb069e99eea2feddd9e5274c77d8f5d0a045015dc4c1c6fc2094cc9502c3e254f617a25f8774c99916bd124fe443fce203d8de81dca1c9e5329'
+
+...

@@ -1,0 +1,14 @@
+---
+# tasks for base_amq
+- name: Set variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags: always
+
+- name: Define desired state
+  include_tasks: "{{ desired_state }}.yml"
+
+- name: "Configure {{ ansible_os_family }}"
+  include_tasks: "{{ ansible_os_family }}.yml"
+  tags: always
+
+...

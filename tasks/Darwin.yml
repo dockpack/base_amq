@@ -1,0 +1,47 @@
+---
+
+- name: Manage directories
+  file:
+    path: "{{ item }}"
+    state: "{{ amq_dir_state }}"
+    mode: 0755
+    owner: "{{ amq_user }}"
+    group: "{{ amq_group | default(omit, true) }}"
+  loop:
+    - "{{ amq_download_path }}"
+    - "{{ amq_logdir }}"
+
+- name: Download Artemis
+  when: desired_state == 'present'
+  get_url:
+    url: "{{ amq_download_url }}"
+    checksum: "{{ amq_checksum }}"
+    dest: "{{ amq_download_path }}/{{ amq_download_file }}"
+    mode: 0644
+
+- name: Extract archive
+  when: desired_state == 'present'
+  unarchive:
+    src: "{{ amq_download_path }}/{{ amq_download_file }}"
+    dest: "{{ amq_install_dir }}"
+    remote_src: true
+    owner: "{{ amq_user }}"
+    group: "{{ amq_group | default(omit, true) }}"
+    creates: "{{ amq_home }}/bin/artemis"
+
+- name: Create symlink
+  when: desired_state == 'present'
+  file:
+    src: "{{ amq_install_dir }}/apache-artemis-{{ amq_ver }}"
+    dest: "{{ amq_home }}"
+    state: link
+    owner: "{{ amq_user }}"
+    group: "{{ amq_group | default(omit, true) }}"
+    mode: 0755
+
+- name: Remove symlink
+  when: desired_state == 'absent'
+  file:
+    path: "{{ amq_home }}"
+    state: absent
+...

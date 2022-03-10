@@ -1,0 +1,23 @@
+- name: Manage directories
+  win_file:
+    path: "{{ item }}"
+    state: "{{ amq_dir_state }}"
+  loop:
+    - "{{ amq_download_path }}"
+    - "{{ amq_logdir }}"
+
+- name: Download Artemis
+  when: desired_state == 'present'
+  win_get_url:
+    url: "{{ amq_download_url }}"
+    dest: "{{ amq_download_path }}/{{ amq_download_file }}"
+
+- name: Extract archive
+  when: desired_state == 'present'
+  win_unzip:
+    src: "{{ amq_download_path }}/{{ amq_download_file }}"
+    dest: "{{ amq_install_dir }}"
+    remote_src: true
+    creates: "{{ amq_home }}/bin/artemis"
+
+...

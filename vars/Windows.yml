@@ -1,0 +1,7 @@
+---
+amq_download_path: Downloads
+amq_install_dir: 'C:\Program Files\ActiveMQ'
+amq_home: "{{ amq_install_dir }}"
+amq_logdir: 'C:\ProgramData\ActiveMQ'
+
+...

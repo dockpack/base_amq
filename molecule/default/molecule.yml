@@ -1,0 +1,32 @@
+---
+dependency:
+  name: galaxy
+  requirements_file: requirements.yml
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  ansible-later -qq
+platforms:
+  - name: amq-centos8
+    image: quay.io/centos/centos:stream8
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      stdout_callback: yaml
+      executable: /bin/bash
+  playbooks:
+    converge: ../resources/playbooks/converge.yml
+    cleanup: ../resources/playbooks/cleanup.yml
+verifier:
+  name: ansible
+...

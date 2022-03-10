@@ -1,0 +1,9 @@
+---
+# Standards: 0.2
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Play the role.
+      include_role:
+        name: "base_amq"
+...

@@ -1,0 +1,7 @@
+---
+amq_user: "{{ lookup('env', 'USER') }}"
+amq_download_path: ~/Downloads/artemis
+amq_install_dir: /opt/local
+amq_home: "{{ amq_install_dir }}/amq"
+amq_logdir: "/var/log/amq"
+...
