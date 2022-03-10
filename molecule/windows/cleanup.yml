@@ -3,6 +3,9 @@
 - name: Converge
   hosts: all
   become: true
+  vars:
+    desired_state: absent
+
   tasks:
     - name: Play the role.
       include_role:
