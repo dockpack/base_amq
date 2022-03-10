@@ -11,6 +11,8 @@ ansible:
     - 'true'
     - 'false'
 rules:
+  exclude_filter:
+    - ANSIBLE0015
   exclude_files:
     - molecule
 
