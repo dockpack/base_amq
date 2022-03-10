@@ -24,6 +24,7 @@ provisioner:
     defaults:
       stdout_callback: yaml
       executable: /bin/bash
+      remote_tmp: $HOME/.ansible/tmp
   playbooks:
     converge: ../resources/playbooks/converge.yml
     cleanup: ../resources/playbooks/cleanup.yml
