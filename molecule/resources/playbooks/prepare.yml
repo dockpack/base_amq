@@ -4,5 +4,6 @@
   hosts: all
 
   tasks:
-    - debug:
+    - name: Display OS family to override molecule prepare
+      debug:
         msg: "os {{ ansible_os_family }}"
