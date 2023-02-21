@@ -41,6 +41,11 @@
     - "{{ amq_download_path }}"
     - "{{ amq_logdir }}"
 
+- name: Install unzip
+  package:
+    name: unzip
+    state: present
+
 - name: Download Artemis
   when: desired_state == 'present'
   get_url:

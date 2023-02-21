@@ -28,7 +28,7 @@ provisioner:
       remote_tmp: $HOME/.ansible/tmp
   playbooks:
     converge: ../resources/playbooks/converge.yml
-    cleanup: ../resources/playbooks/cleanup.yml
+    verify: ../resources/playbooks/verify.yml
 verifier:
   name: ansible
 ...
