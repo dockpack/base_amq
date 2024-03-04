@@ -1,7 +1,7 @@
 ---
 
 - name: Manage directories
-  win_file:
+  ansible.windows.win_file:
     path: "{{ item }}"
     state: "{{ amq_dir_state }}"
   loop:
@@ -10,13 +10,13 @@
 
 - name: Download Artemis
   when: desired_state == 'present'
-  win_get_url:
+  ansible.windows.win_get_url:
     url: "{{ amq_download_url }}"
     dest: "{{ amq_download_path }}/{{ amq_download_file }}"
 
 - name: Extract archive
   when: desired_state == 'present'
-  win_unzip:
+  ansible.windows.win_unzip:
     src: "{{ amq_download_path }}/{{ amq_download_file }}"
     dest: "{{ amq_install_dir }}"
     remote_src: true

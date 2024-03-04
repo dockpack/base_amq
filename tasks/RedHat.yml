@@ -4,17 +4,17 @@
   when:
     - desired_state == 'present'
     - amq_group is defined
-  group:
+  ansible.builtin.group:
     name: "{{ amq_group }}"
     gid: "{{ amq_gid | default(omit, true) }}"
     state: present
 
 - name: Manage user for AMQ
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ amq_user }}"
     group: "{{ amq_group }}"
-    uid: "{{ amq_uid | default( omit, true) }}"
+    uid: "{{ amq_uid | default(omit, true) }}"
     createhome: false
     state: "{{ desired_state }}"
     system: true
@@ -24,14 +24,14 @@
   when:
     - desired_state == 'absent'
     - amq_group is defined
-  group:
+  ansible.builtin.group:
     name: "{{ amq_group }}"
     gid: "{{ amq_gid | default(omit, true) }}"
     state: absent
 
 - name: Manage directories
   become: true
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "{{ amq_dir_state }}"
     mode: 0755
@@ -42,13 +42,13 @@
     - "{{ amq_logdir }}"
 
 - name: Install unzip
-  package:
+  ansible.builtin.package:
     name: unzip
     state: present
 
 - name: Download Artemis
   when: desired_state == 'present'
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ amq_download_url }}"
     checksum: "{{ amq_checksum }}"
     dest: "{{ amq_download_path }}/{{ amq_download_file }}"
@@ -57,7 +57,7 @@
 - name: Extract archive
   become: true
   when: desired_state == 'present'
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ amq_download_path }}/{{ amq_download_file }}"
     dest: "{{ amq_install_dir }}"
     remote_src: true
@@ -68,7 +68,7 @@
 - name: Create symlink
   become: true
   when: desired_state == 'present'
-  file:
+  ansible.builtin.file:
     src: "{{ amq_install_dir }}/apache-artemis-{{ amq_ver }}"
     dest: "{{ amq_home }}"
     state: link
@@ -79,7 +79,7 @@
 - name: Remove symlink
   become: true
   when: desired_state == 'absent'
-  file:
+  ansible.builtin.file:
     path: "{{ amq_home }}"
     state: absent
 ...

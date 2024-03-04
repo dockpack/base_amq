@@ -7,7 +7,7 @@
     desired_state: absent
 
   tasks:
-    - name: Play the role.
-      include_role:
+    - name: Play the role
+      ansible.builtin.include_role:
         name: "base_amq"
 ...
