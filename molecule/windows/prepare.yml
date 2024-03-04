@@ -1,9 +1,9 @@
 ---
 
-- name: prepare
+- name: Prepare
   hosts: all
 
   tasks:
     - name: Display OS family to override molecule prepare
-      debug:
+      ansible.builtin.debug:
         msg: "os {{ ansible_os_family }}"

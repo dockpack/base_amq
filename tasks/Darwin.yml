@@ -1,7 +1,7 @@
 ---
 
 - name: Manage directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: "{{ amq_dir_state }}"
     mode: 0755
@@ -13,7 +13,7 @@
 
 - name: Download Artemis
   when: desired_state == 'present'
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ amq_download_url }}"
     checksum: "{{ amq_checksum }}"
     dest: "{{ amq_download_path }}/{{ amq_download_file }}"
@@ -21,7 +21,7 @@
 
 - name: Extract archive
   when: desired_state == 'present'
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ amq_download_path }}/{{ amq_download_file }}"
     dest: "{{ amq_install_dir }}"
     remote_src: true
@@ -31,7 +31,7 @@
 
 - name: Create symlink
   when: desired_state == 'present'
-  file:
+  ansible.builtin.file:
     src: "{{ amq_install_dir }}/apache-artemis-{{ amq_ver }}"
     dest: "{{ amq_home }}"
     state: link
@@ -41,7 +41,7 @@
 
 - name: Remove symlink
   when: desired_state == 'absent'
-  file:
+  ansible.builtin.file:
     path: "{{ amq_home }}"
     state: absent
 ...

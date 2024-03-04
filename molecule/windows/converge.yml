@@ -4,6 +4,6 @@
   hosts: all
   tasks:
     - name: Play the role.
-      include_role:
+      ansible.builtin.include_role:
         name: "base_amq"
 ...
