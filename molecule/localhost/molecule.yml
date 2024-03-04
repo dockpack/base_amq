@@ -3,7 +3,7 @@ dependency:
   name: galaxy
   requirements_file: requirements.yml
 driver:
-  name: delegated
+  name: default
   options:
     managed: false
     ansible_connection_options:
