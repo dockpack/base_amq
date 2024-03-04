@@ -36,7 +36,7 @@
     dest: /lib/systemd/system/{{ broker_name }}.service
     mode: '0644'
 
-- name: "Enable {{ broker_name }}.service"
+- name: "Enable {{ broker_name }}"
   ansible.builtin.systemd:
     name: "{{ broker_name }}"
     daemon_reload: true
