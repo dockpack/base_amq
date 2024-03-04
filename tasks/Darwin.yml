@@ -20,6 +20,7 @@
     mode: 0644
 
 - name: Extract archive
+  become: true
   when: desired_state == 'present'
   ansible.builtin.unarchive:
     src: "{{ amq_download_path }}/{{ amq_download_file }}"
@@ -30,6 +31,7 @@
     creates: "{{ amq_home }}/bin/artemis"
 
 - name: Create symlink
+  become: true
   when: desired_state == 'present'
   ansible.builtin.file:
     src: "{{ amq_install_dir }}/apache-artemis-{{ amq_ver }}"
@@ -40,6 +42,7 @@
     mode: 0755
 
 - name: Remove symlink
+  become: true
   when: desired_state == 'absent'
   ansible.builtin.file:
     path: "{{ amq_home }}"

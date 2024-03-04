@@ -36,7 +36,7 @@
     state: "{{ amq_dir_state }}"
     mode: 0755
     owner: "{{ amq_user }}"
-    group: "{{ amq_group }}"
+    group: "{{ amq_group | default(omit, true) }}"
   loop:
     - "{{ amq_download_path }}"
     - "{{ amq_logdir }}"
@@ -62,7 +62,7 @@
     dest: "{{ amq_install_dir }}"
     remote_src: true
     owner: "{{ amq_user }}"
-    group: "{{ amq_group }}"
+    group: "{{ amq_group | default(omit, true) }}"
     creates: "{{ amq_home }}/bin/artemis"
 
 - name: Create symlink
@@ -73,7 +73,7 @@
     dest: "{{ amq_home }}"
     state: link
     owner: "{{ amq_user }}"
-    group: "{{ amq_group }}"
+    group: "{{ amq_group | default(omit, true) }}"
     mode: 0755
 
 - name: Remove symlink
