@@ -4,4 +4,5 @@ amq_download_path: ~/Downloads/artemis
 amq_install_dir: /opt/local
 amq_home: "{{ amq_install_dir }}/amq"
 amq_logdir: "/var/log/amq"
-...
+broker_dir_parent: /var/lib/
+

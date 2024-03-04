@@ -26,6 +26,7 @@ provisioner:
       executable: /bin/bash
       remote_tmp: /tmp/.ansible
   playbooks:
+    prepare: ../resources/playbooks/prepare.yml
     converge: ../resources/playbooks/converge.yml
     verify: ../resources/playbooks/verify.yml
 verifier:

@@ -1,0 +1,6 @@
+---
+
+- name: "Restart {{ broker_name }}"
+  ansible.builtin.systemd:
+    name: "{{ broker_name }}"
+    state: restarted

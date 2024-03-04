@@ -5,5 +5,5 @@
 
   tasks:
     - name: Display OS family to override molecule prepare
-      ansible.builtin.debug:
-        msg: "os {{ ansible_os_family }}"
+      ansible.builtin.include_role:
+        name: dockpack.base_java8
