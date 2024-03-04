@@ -11,4 +11,35 @@
   ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
   tags: always
 
+- name: Create broker
+  when: ansible_os_family != 'Windows'
+  ansible.builtin.command: |
+    {{ amq_home }}/bin/artemis create
+      --user {{ amq_user }}
+      --password {{ amq_password }}
+      --require-login
+      {{ broker_dir_parent }}/{{ broker_name }}
+  args:
+    creates: "{{ broker_dir_parent }}/{{ broker_name }}"
+
+- name: Fix permissions
+  ansible.builtin.file:
+    path: "{{ broker_dir_parent }}/{{ broker_name }}"
+    owner: "{{ amq_user }}"
+    group: "{{ amq_group | default(omit, true) }}"
+    recurse: true
+
+- name: Create systemd service
+  when: ansible_os_family == 'RedHat'
+  ansible.builtin.template:
+    src: broker.service.j2
+    dest: /lib/systemd/system/{{ broker_name }}.service
+    mode: '0644'
+
+- name: "Enable {{ broker_name }}.service"
+  ansible.builtin.systemd:
+    name: "{{ broker_name }}"
+    daemon_reload: true
+    enabled: true
+  notify: "Restart {{ broker_name }}"
 ...
