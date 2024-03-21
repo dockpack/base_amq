@@ -1,0 +1,25 @@
+---
+# export DOCKER_REGISTRY
+- name: Commit, tag, and push Docker image
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    github_actions: "{{  lookup('env', 'GITHUB_ACTIONS') }}"
+    docker_registry: "{{ lookup('env','DOCKER_REGISTRY') }}"
+    image_name: "dockpack/base_amq"
+    image_tag: "{{ lookup('pipe', 'date +%Y%m%d%H') }}"  # Generates a date hour stamp
+  tasks:
+    - name: Commit the container
+      ansible.builtin.command:
+        cmd: "docker commit base_amq {{ image_name }}:{{ image_tag }}"
+      changed_when: true
+      register: commit_output
+
+    - name: Tag and push the Docker image
+      when: not github_actions | bool
+      community.docker.docker_image:
+        name: "{{ docker_registry }}{% if docker_registry | length > 1 %}/{% endif %}{{ image_name }}"
+        tag: "{{ image_tag }}"
+        push: true
+        source: local

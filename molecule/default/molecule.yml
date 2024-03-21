@@ -5,7 +5,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: amq-alma8
+  - name: base_amq
     image: dokken/almalinux-8
     pre_build_image: true
     command: /sbin/init
@@ -29,6 +29,7 @@ provisioner:
     prepare: ../resources/playbooks/prepare.yml
     converge: ../resources/playbooks/converge.yml
     verify: ../resources/playbooks/verify.yml
+    side_effect: ../resources/playbooks/side-effect.yml
 verifier:
   name: ansible
 ...
