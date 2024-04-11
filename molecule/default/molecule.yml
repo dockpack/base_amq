@@ -23,6 +23,7 @@ provisioner:
     defaults:
       stdout_callback: yaml
       callbacks_enabled: profile_tasks, timer
+      become_method: machinectl
       executable: /bin/bash
       remote_tmp: /tmp/.ansible
   playbooks:
